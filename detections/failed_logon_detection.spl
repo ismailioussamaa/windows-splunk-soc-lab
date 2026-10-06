@@ -1,7 +1,7 @@
 index=main sourcetype="WinEventLog:Security" EventCode=4625
 | bin _time span=5m
 | stats count as failed_logons by _time ComputerName
-| where failed_logons >= 5
+| where failed_logons >= 3
 | eval severity="Medium"
 | eval detection="Multiple Windows Failed Logons"
 | table _time ComputerName failed_logons detection severity
