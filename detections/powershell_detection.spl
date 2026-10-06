@@ -1,0 +1,30 @@
+# Détection : activité PowerShell potentiellement suspecte
+# Source : Sysmon Event ID 1 - Process Creation
+
+index=main sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" "<EventID>1</EventID>"
+| rex field=_raw "<Data Name='Image'>(?<Image>[^<]+)</Data>"
+| rex field=_raw "<Data Name='CommandLine'>(?<CommandLine>[^<]*)</Data>"
+| rex field=_raw "<Data Name='ParentImage'>(?<ParentImage>[^<]+)</Data>"
+| rex field=_raw "<Data Name='ParentCommandLine'>(?<ParentCommandLine>[^<]*)</Data>"
+| rex field=_raw "<Data Name='User'>(?<User>[^<]+)</Data>"
+| rex field=_raw "<Data Name='ProcessId'>(?<ProcessId>[^<]+)</Data>"
+| rex field=_raw "<Data Name='ProcessGuid'>(?<ProcessGuid>[^<]+)</Data>"
+
+| where like(Image,"%powershell.exe")
+| where NOT like(Image,"%splunk-powershell.exe")
+
+| eval detection_reason=case(
+    match(CommandLine,"(?i)EncodedCommand|FromBase64String"),"PowerShell encodé ou obfusqué",
+    match(CommandLine,"(?i)DownloadString|Invoke-WebRequest"),"Activité potentielle de téléchargement ou réseau",
+    match(CommandLine,"(?i)IEX"),"Exécution dynamique PowerShell",
+    1=1,"Exécution PowerShell normale"
+)
+
+| eval severity=case(
+    match(CommandLine,"(?i)EncodedCommand|FromBase64String|IEX"),"High",
+    match(CommandLine,"(?i)DownloadString|Invoke-WebRequest"),"Medium",
+    1=1,"Low"
+)
+
+| table _time User ProcessId ProcessGuid Image CommandLine ParentImage ParentCommandLine detection_reason severity
+| sort - _time
