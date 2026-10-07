@@ -78,3 +78,38 @@ L'analyse de la relation Parent → Child permet d'ajouter du contexte aux déte
 Dans ce scénario, l'activité a été classée comme légitime dans le contexte du laboratoire.
 
 **Status:** Closed — Benign / Lab Activity
+
+---
+
+## 8. SOC Response Workflow
+
+### Triage
+
+- Vérifier le processus parent et le processus enfant.
+- Examiner la CommandLine complète.
+- Identifier la relation Parent → Child.
+- Vérifier l'activité réseau associée au processus.
+
+### Investigation
+
+- Analyser le Process Tree.
+- Vérifier les événements Sysmon Event ID 1 et 3.
+- Examiner le contexte de lancement de PowerShell.
+- Rechercher d'autres indicateurs PowerShell suspects.
+- Vérifier les éventuels IOC.
+
+### Response Decision
+
+L'analyse a confirmé une activité de test dans l'environnement de laboratoire.
+
+- **Containment :** Non requis
+- **Escalation :** Non requise
+- **Action :** Documenter le résultat et fermer l'alerte
+
+### Closure
+
+**Classification :** Benign / Lab Activity
+
+**Final Severity :** Low
+
+**Status :** Closed — Benign / Lab Activity
