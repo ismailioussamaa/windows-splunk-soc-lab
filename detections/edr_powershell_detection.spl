@@ -1,0 +1,21 @@
+# EDR-style Detection: Suspicious PowerShell
+# Source: Sysmon Event ID 1 - Process Creation
+
+index=main sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" "<EventID>1</EventID>"
+| rex field=_raw "<Data Name='Image'>(?<Image>[^<]+)</Data>"
+| rex field=_raw "<Data Name='ParentImage'>(?<ParentImage>[^<]+)</Data>"
+| rex field=_raw "<Data Name='CommandLine'>(?<CommandLine>[^<]*)</Data>"
+
+| where like(Image,"%powershell.exe")
+| where NOT like(Image,"%splunk-powershell.exe")
+
+| where match(CommandLine,"(?i)EncodedCommand|FromBase64String|DownloadString|Invoke-WebRequest|IEX|-enc")
+
+| eval severity=case(
+    match(CommandLine,"(?i)EncodedCommand|FromBase64String|IEX|-enc"),"High",
+    match(CommandLine,"(?i)DownloadString|Invoke-WebRequest"),"Medium",
+    1=1,"Low"
+)
+
+| table _time Image ParentImage CommandLine severity
+| sort - _time
