@@ -41,7 +41,7 @@ Windows 11
 | LOLBin Detection | Sysmon EID 1 | Identifier l'utilisation de binaires Windows pouvant être détournés |
 | EDR PowerShell Detection | Sysmon EID 1 | Détecter des comportements PowerShell suspects |
 | Parent-Child Process Detection | Sysmon EID 1 | Analyser les relations entre processus |
-| Network Connection Analysis | Sysmon EID 3 | Investiguer les connexions réseau endpoint |
+
 
 ---
 
