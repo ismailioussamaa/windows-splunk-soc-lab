@@ -76,6 +76,39 @@ L'activité réseau observée est cohérente avec l'utilisation légitime de `mi
 
 Aucun élément analysé ne permet de confirmer une activité malveillante.
 
-L'alerte est donc classée comme **faible risque / activité légitime**.
+---
 
-**Statut :** Closed — Benign / Legitimate Activity
+## 8. SOC Response Workflow
+
+### Triage
+
+- Vérifier le processus à l'origine de la connexion.
+- Examiner l'adresse IP source et destination.
+- Vérifier le protocole et le port utilisés.
+- Vérifier si la connexion correspond à une application connue.
+
+### Investigation
+
+- Analyser les événements Sysmon Event ID 3.
+- Vérifier les connexions similaires du même processus.
+- Examiner la destination réseau.
+- Vérifier si le comportement est cohérent avec l'utilisation de `microsip.exe`.
+- Rechercher d'éventuels IOC réseau.
+
+### Response Decision
+
+La connexion observée est cohérente avec une utilisation légitime de `microsip.exe` et du protocole SIP.
+
+- **Containment :** Non requis
+- **Escalation :** Non requise
+- **Action :** Documenter l'activité et maintenir la surveillance
+
+### Closure
+
+**Classification :** Benign / Legitimate Activity
+
+**Final Severity :** Low
+
+**Status :** Closed — Benign / Legitimate Activity
+
+L'alerte est donc classée comme **faible risque / activité légitime**.
