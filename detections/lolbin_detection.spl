@@ -1,0 +1,18 @@
+# Detection : Windows LOLBin execution
+# Source : Sysmon Event ID 1 - Process Creation
+
+index=main sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" "<EventID>1</EventID>"
+| rex field=_raw "<Data Name='Image'>(?<Image>[^<]+)</Data>"
+| rex field=_raw "<Data Name='CommandLine'>(?<CommandLine>[^<]*)</Data>"
+| rex field=_raw "<Data Name='ParentImage'>(?<ParentImage>[^<]+)</Data>"
+
+| where match(Image,"(?i)(rundll32|regsvr32|mshta|certutil)\.exe$")
+
+| eval severity=case(
+    match(CommandLine,"(?i)javascript:|vbscript:|scrobj\.dll"),"High",
+    match(CommandLine,"(?i)https?://"),"Medium",
+    1=1,"Low"
+)
+
+| table _time Image CommandLine ParentImage severity
+| sort - _time
