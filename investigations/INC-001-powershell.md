@@ -89,3 +89,37 @@ L'activité observée ne présente pas suffisamment d'éléments permettant de c
 L'alerte est donc classée comme **faible risque / probablement légitime**, tout en conservant une surveillance des éventuelles activités PowerShell associées.
 
 **Statut :** Closed — Benign / Legitimate Activity
+
+---
+
+## 9. SOC Response Workflow
+
+### Triage
+
+- Vérifier l'utilisateur et l'endpoint concernés.
+- Examiner la CommandLine complète.
+- Vérifier le processus parent et le Process Tree.
+- Rechercher une activité réseau associée.
+
+### Investigation
+
+- Analyser les événements Sysmon associés.
+- Vérifier la présence d'URL ou de téléchargement.
+- Rechercher d'autres activités PowerShell suspectes.
+- Vérifier les éventuels IOC.
+
+### Response Decision
+
+Aucun indicateur de compromission n'a été confirmé.
+
+- **Containment :** Non requis
+- **Escalation :** Non requise
+- **Action :** Surveillance et fermeture de l'alerte
+
+### Closure
+
+**Classification :** Benign / Legitimate Activity
+
+**Final Severity :** Low
+
+**Status :** Closed
