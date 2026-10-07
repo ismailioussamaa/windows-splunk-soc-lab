@@ -122,3 +122,38 @@ L'investigation a permis de :
 **Final Verdict: Benign / Test Activity**
 
 Cette investigation démontre qu'une détection EDR doit toujours être suivie d'une analyse contextuelle avant de confirmer une compromission.
+
+---
+
+## 11. SOC Response Workflow
+
+### Triage
+
+- Vérifier le processus PowerShell et son processus parent.
+- Examiner la CommandLine complète.
+- Vérifier l'indicateur ayant déclenché la détection.
+- Rechercher une connexion réseau associée au processus.
+
+### Investigation
+
+- Analyser le Process Tree.
+- Vérifier les événements Sysmon Event ID 1 et 3.
+- Rechercher une URL, un téléchargement ou une commande PowerShell suspecte.
+- Vérifier les éventuels IOC.
+- Déterminer si l'activité correspond à un test, une activité légitime ou un comportement malveillant.
+
+### Response Decision
+
+L'analyse a confirmé une activité de laboratoire sans compromission.
+
+- **Containment :** Non requis
+- **Escalation :** Non requise
+- **Action :** Documenter le résultat et fermer l'alerte
+
+### Closure
+
+**Classification :** Benign / Test Activity
+
+**Final Severity :** Low
+
+**Status :** Closed — Benign / Test Activity
