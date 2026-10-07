@@ -147,3 +147,39 @@ La corrélation entre les événements, l'analyse du contexte utilisateur, la so
 Dans un environnement SOC, une activité réellement suspecte devrait être escaladée conformément au playbook d'incident.
 
 **Statut :** Investigation / À qualifier
+
+---
+
+## 10. SOC Response Workflow
+
+### Triage
+
+- Vérifier le compte ciblé.
+- Vérifier le nombre de tentatives d'authentification échouées.
+- Examiner le `Logon Type`.
+- Identifier la source de la tentative lorsqu'elle est disponible.
+- Rechercher une authentification réussie après plusieurs échecs.
+
+### Investigation
+
+- Analyser les événements 4625 et 4624.
+- Vérifier la chronologie des événements.
+- Identifier les comptes et sources concernés.
+- Rechercher d'autres activités suspectes associées au compte ou à l'endpoint.
+- Évaluer si le comportement correspond aux habitudes normales.
+
+### Response Decision
+
+La séquence d'authentification doit être évaluée selon son contexte.
+
+- **Containment :** Selon le niveau de risque
+- **Escalation :** Si des indicateurs de compromission sont confirmés
+- **Action :** Surveiller, approfondir l'investigation ou escalader selon le verdict
+
+### Closure
+
+**Classification :** À qualifier selon le contexte
+
+**Final Severity :** Low / Medium
+
+**Status :** Investigation / À qualifier
