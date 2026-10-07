@@ -128,6 +128,42 @@ L'exécution de `rundll32.exe` analysée est cohérente avec une activité syst�
 
 L'analyse du processus parent, de la CommandLine, de la DLL utilisée et du contexte d'exécution ne révèle aucun indicateur permettant de confirmer une compromission.
 
+---
+
+## 11. SOC Response Workflow
+
+### Triage
+
+- Vérifier le processus `rundll32.exe`.
+- Examiner le `ParentImage`.
+- Analyser la `CommandLine`.
+- Identifier la DLL utilisée.
+- Vérifier le chemin du binaire.
+
+### Investigation
+
+- Analyser le Process Tree.
+- Vérifier si la DLL et la commande sont cohérentes avec une activité Windows légitime.
+- Rechercher une activité réseau associée.
+- Vérifier les exécutions similaires.
+- Rechercher d'éventuels IOC.
+
+### Response Decision
+
+L'analyse du contexte indique une activité système Windows légitime.
+
+- **Containment :** Non requis
+- **Escalation :** Non requise
+- **Action :** Documenter le faux positif et maintenir la surveillance
+
+### Closure
+
+**Classification :** Benign / Legitimate Activity
+
+**Final Severity :** Low
+
+**Status :** Closed — Benign / Legitimate Activity
+
 Cette investigation démontre l'importance du contexte dans une détection EDR/SOC.
 
 > Une détection n'est pas une preuve de compromission.
