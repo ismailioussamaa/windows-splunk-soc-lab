@@ -1,0 +1,18 @@
+# Detection: Suspicious Parent-Child Process Relationship
+# Source: Sysmon Event ID 1 - Process Creation
+
+index=main sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" "<EventID>1</EventID>"
+| rex field=_raw "<Data Name='Image'>(?<Image>[^<]+)</Data>"
+| rex field=_raw "<Data Name='ParentImage'>(?<ParentImage>[^<]+)</Data>"
+| rex field=_raw "<Data Name='ParentCommandLine'>(?<ParentCommandLine>[^<]+)</Data>"
+| rex field=_raw "<Data Name='CommandLine'>(?<CommandLine>[^<]+)</Data>"
+
+| where like(Image,"%powershell.exe")
+| where NOT like(Image,"%splunk-powershell.exe")
+| where NOT like(ParentImage,"%ekrn.exe")
+| where NOT like(ParentImage,"%explorer.exe")
+
+| eval severity="High"
+
+| table _time Image ParentImage ParentCommandLine CommandLine severity
+| sort - _time
