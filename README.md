@@ -14,12 +14,6 @@ Le laboratoire couvre la détection et l'investigation d'activités Windows pote
 
 ## Architecture
 
-## Splunk SOC Dashboard
-
-Dashboard de monitoring développé dans Splunk Enterprise pour visualiser l'activité Windows et faciliter le triage SOC.
-
-![Splunk SOC Dashboard](<Tableau%20de%20bord%20SOC%20Windows%20Monitoring.png>)
-
 Windows 11
 → Sysmon
 → Endpoint Telemetry
@@ -37,6 +31,12 @@ Windows 11
 - Windows Security Event ID 4625 — Failed Logon
 
 ---
+## Splunk SOC Dashboard
+
+Dashboard de monitoring développé dans Splunk Enterprise pour visualiser l'activité Windows et faciliter le triage SOC.
+
+![Splunk SOC Dashboard](<Tableau%20de%20bord%20SOC%20Windows%20Monitoring.png>)
+
 
 ## Détections développées
 
